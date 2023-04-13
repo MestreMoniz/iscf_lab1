@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getDatabase, ref, onValue} from "firebase/database";
+import Link from 'next/link'
+
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -28,7 +30,23 @@ const newposition = ref(db, "accel/");
 
 
 export default function Dashboard() {
-    const [data, setdata] = useState();
+
+  const [botaoAtivo, setBotaoAtivo] = useState(null)
+
+  const handleClick = (botao, tempo) => {
+    setBotaoAtivo(botao)
+
+    setTimeout(() => {
+      // Atualiza a página após o tempo definido
+      location.reload()
+    }, tempo)
+  }
+
+  const botao1Style = botaoAtivo === 1 ? { backgroundColor: 'green' } : {}
+  const botao2Style = botaoAtivo === 2 ? { backgroundColor: 'green' } : {}
+
+  const [data, setdata] = useState();
+
 
     useEffect(() => {
         onValue(newposition, (snapshot) => {
@@ -53,6 +71,10 @@ export default function Dashboard() {
         <div>
           <h1>Gráfico de Linhas</h1>
           <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        </div>
+        <div>
+        <button style={botao1Style} onClick={() => handleClick(1, 1000)}>Botão 1 (1 segundos)</button>
+        <button style={botao2Style} onClick={() => handleClick(2, 2000)}>Botão 2 (2 segundos)</button>
         </div>
         <div>
           <canvas id="myChart"></canvas>
