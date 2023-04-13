@@ -1,0 +1,12 @@
+#moldura {
+    border: 1px solid #000;
+    padding: 10px;
+    width: 400px;
+    height: 300px;
+  }
+  
+  .grafico {
+    max-width: 100%;
+    max-height: 100%;
+  }
+  
